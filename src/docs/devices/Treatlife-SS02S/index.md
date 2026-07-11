@@ -15,7 +15,8 @@ board: bk72xx
   * The version of the LED board is v1.1 dated 2019-01-19 in both cases
   * Some versions feature the BK7231S board (`WB3S` label on the chip)
   * Some versions feature the BK7231N board (`CB3S` label on the chip)
-  * The LED pins are different for the two boards (see the configuration below)
+  * Newer versions feature the BK7238 board (`CB3S-V200` label on the RF shield)
+  * The LED pins are different for the three boards (see the configuration below)
 * Requires disassembly and soldering to flash, see instructions here: [https://youtu.be/-a5hV1y5aIU?t=85](https://youtu.be/-a5hV1y5aIU?t=85)
 
 The 2 way switch does not have a power sense pin. To solve this issue, and allow the smart switch to be smart, this code
@@ -56,12 +57,12 @@ If flashing with the `esphome` tool does not work, you can try the `ltchiptool` 
 
 ## GPIO Pinout
 
-| Function                              | WB3S Pins | CB3S Pins |
-|---------------------------------------|-----------|-----------|
-| White LED (Power Sensor)              | P9        | P8        |
-| Status LED                            | P8        | P7        |
-| Relay 1                               | P24       | P24       |
-| Button 1                              | P6        | P6        |
+| Function                              | WB3S Pins | CB3S Pins | CB3S-V200 Pins |
+|---------------------------------------|:---------:|:---------:|:--------------:|
+| White LED (Power Sensor)              | P9        | P8        | P8             |
+| Status LED                            | P8        | P7        | P26            |
+| Relay 1                               | P24       | P24       | P24            |
+| Button 1                              | P6        | P6        | P9             |
 
 ## Basic Configuration
 
@@ -74,6 +75,11 @@ substitutions:
 bk72xx:
   board: generic-bk7231t-qfn32-tuya # WB3S board Ref: https://docs.libretiny.eu/boards/generic-bk7231t-qfn32-tuya/
   # board: cb3s # CB3S board Ref: https://docs.libretiny.eu/boards/cb3s/
+  ## board: generic-bk7238-tuya # CB3S-V200 board Ref: https://docs.libretiny.eu/boards/generic-bk7238-tuya/
+  ## framework:
+  ##   version: 0.0.0
+  ##   source: https://github.com/libretiny-eu/libretiny # (1.13.0 or newer)
+
 esphome:
   name: ${device_name}
 
@@ -103,7 +109,7 @@ output:
     id: white_led_output
     pin:
       number: P9 # WB3S board
-      # number: P8 # CB3S board
+      # number: P8 # CB3S and CB3S-V200 boards
 
 light:
   - platform: binary
@@ -124,7 +130,8 @@ binary_sensor:
     id: ${device_name}_button
     name: ${friendly_name} Button
     pin:
-      number: P6
+      number: P6 # WB3S and CB3S boards
+      #number: P9 # CB3S-V200 board
     on_press:
       - light.toggle: ${device_name}
 
@@ -133,6 +140,7 @@ status_led:
   pin:
     number: P8 # WB3S board
     # number: P7 # CB3S board
+    # number: P26 # CB3S-V200 board
     inverted: yes
 ```
 
