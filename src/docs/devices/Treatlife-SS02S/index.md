@@ -55,6 +55,11 @@ If flashing with the `esphome` tool does not work, you can try the `ltchiptool` 
 
 ![BK7231N Flashing](BK7231N-flashing.jpg "BK7231N, aka CB3s board and flashing setup")
 
+
+### CB3S-V200 Board
+
+![BK7238](BK7238.jpg "BK7238, aka CB3S-V200 board")
+
 ## GPIO Pinout
 
 | Function                              | WB3S Pins | CB3S Pins | CB3S-V200 Pins |
