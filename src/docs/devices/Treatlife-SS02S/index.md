@@ -55,7 +55,6 @@ If flashing with the `esphome` tool does not work, you can try the `ltchiptool` 
 
 ![BK7231N Flashing](BK7231N-flashing.jpg "BK7231N, aka CB3s board and flashing setup")
 
-
 ### CB3S-V200 Board
 
 ![BK7238](BK7238.jpg "BK7238, aka CB3S-V200 board")
@@ -71,89 +70,10 @@ If flashing with the `esphome` tool does not work, you can try the `ltchiptool` 
 
 ## Basic Configuration
 
-```yaml
-substitutions:
-  device_name: treatlifeswitch #change
-  friendly_name: "Treatlife Light Switch" #change
-  icon: "mdi:light-switch"
-
-bk72xx:
-  board: generic-bk7231t-qfn32-tuya # WB3S board Ref: https://docs.libretiny.eu/boards/generic-bk7231t-qfn32-tuya/
-  # board: cb3s # CB3S board Ref: https://docs.libretiny.eu/boards/cb3s/
-  ## board: generic-bk7238-tuya # CB3S-V200 board Ref: https://docs.libretiny.eu/boards/generic-bk7238-tuya/
-  ## framework:
-  ##   version: 0.0.0
-  ##   source: https://github.com/libretiny-eu/libretiny # (1.13.0 or newer)
-
-esphome:
-  name: ${device_name}
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  fast_connect: true
-  ap:
-    ssid: ${device_name}
-    password: !secret esphome_ap_password
-
-logger:
-
-api:
-  encryption:
-    key: !secret api_encryption_key
-
-ota:
-  password: !secret esphome_ota_password
-
-output:
-  - platform: gpio
-    id: switch_output
-    pin: P24
-
-  - platform: gpio
-    id: white_led_output
-    pin:
-      number: P9 # WB3S board
-      # number: P8 # CB3S and CB3S-V200 boards
-
-light:
-  - platform: binary
-    id: ${device_name}
-    name: ${friendly_name}
-    output: switch_output
-    on_turn_on:
-      - light.turn_on: white_led
-    on_turn_off:
-      - light.turn_off: white_led
-
-  - platform: binary
-    id: white_led
-    output: white_led_output
-
-binary_sensor:
-  - platform: gpio
-    id: ${device_name}_button
-    name: ${friendly_name} Button
-    pin:
-      number: P6 # WB3S and CB3S boards
-      #number: P9 # CB3S-V200 board
-    on_press:
-      - light.toggle: ${device_name}
-
-status_led:
-  # Red LED
-  pin:
-    number: P8 # WB3S board
-    # number: P7 # CB3S board
-    # number: P26 # CB3S-V200 board
-    inverted: yes
+```yaml file=config.yaml
 ```
 
 ## Home Assistant light entity (Converts it from a switch to a Light Entity)
 
-```yaml
-light:
-  - platform: switch
-    name: "Treatlife Light Switch"
-    entity_id: switch.treatlifeswitch # Change
+```yaml file=ha_entity.yaml
 ```
