@@ -1,4 +1,0 @@
-light:
-  - platform: switch
-    name: "Treatlife Light Switch"
-    entity_id: switch.treatlifeswitch # Change
