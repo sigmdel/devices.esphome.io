@@ -75,5 +75,9 @@ If flashing with the `esphome` tool does not work, you can try the `ltchiptool` 
 
 ## Home Assistant light entity (Converts it from a switch to a Light Entity)
 
-```yaml file=ha_entity.yaml
+```yaml inline
+light:
+  - platform: switch
+    name: "Treatlife Light Switch"
+    entity_id: switch.treatlifeswitch # Change
 ```
