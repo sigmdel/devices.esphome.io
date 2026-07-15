@@ -17,13 +17,15 @@ esphome:
 output:
   - platform: gpio
     id: switch_output
-    pin: P24
+    pin: P24 # WB3S and CB3S boards
+    # pin: 8 # CB3S-V200
 
   - platform: gpio
     id: white_led_output
     pin:
       number: P9 # WB3S board
-      # number: P8 # CB3S and CB3S-V200 boards
+      # number: P8 # CB3S board
+      # number: P4 # CB3S-V200 board
 
 light:
   - platform: binary
@@ -45,7 +47,7 @@ binary_sensor:
     name: ${friendly_name} Button
     pin:
       number: P6 # WB3S and CB3S boards
-      #number: P9 # CB3S-V200 board
+      # number: P9 # CB3S-V200 board
     on_press:
       - light.toggle: ${device_name}
 
