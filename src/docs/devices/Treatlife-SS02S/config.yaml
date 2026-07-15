@@ -18,14 +18,14 @@ output:
   - platform: gpio
     id: switch_output
     pin: P24 # WB3S and CB3S boards
-    # pin: 8 # CB3S-V200
+    # pin: P8 # CB3S-V200
 
   - platform: gpio
     id: white_led_output
     pin:
       number: P9 # WB3S board
       # number: P8 # CB3S board
-      # number: P4 # CB3S-V200 board
+      # number: P24 # CB3S-V200 board
 
 light:
   - platform: binary
